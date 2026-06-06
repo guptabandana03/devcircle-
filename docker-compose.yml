@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: devcircle_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - devcircle_network
+
+  backend:
+    build: ./backend
+    container_name: devcircle_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/devcircle
+      - JWT_SECRET=devcircle_super_secret_key_1337
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mongodb
+    networks:
+      - devcircle_network
+
+  frontend:
+    build: ./frontend
+    container_name: devcircle_frontend
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - devcircle_network
+
+volumes:
+  mongo_data:
+
+networks:
+  devcircle_network:
+    driver: bridge
