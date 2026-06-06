@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL
 
 function DevelopersPage() {
   const [developers, setDevelopers] = useState([]);
@@ -9,7 +10,7 @@ function DevelopersPage() {
   const fetchDevelopers = async (query = "") => {
     try {
       const response = await axios.get(
-        `/api/users?query=${query}`
+        `${API_URL}/api/users?query=${query}`
       );
 
       setDevelopers(response.data);
