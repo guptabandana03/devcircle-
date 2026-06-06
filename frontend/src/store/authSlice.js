@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+const API_URL = import.meta.env.VITE_API_URL
 
 const user = JSON.parse(localStorage.getItem('devcircle_user'))
 const token = localStorage.getItem('devcircle_token')
@@ -14,7 +15,7 @@ const initialState = {
 // Register user
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
   try {
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
@@ -44,7 +45,7 @@ export const register = createAsyncThunk('auth/register', async (userData, thunk
 // Login user
 export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
   try {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
@@ -75,7 +76,7 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (profileData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch('/api/users/profile', {
+    const response = await fetch(`${API_URL}/api/users/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

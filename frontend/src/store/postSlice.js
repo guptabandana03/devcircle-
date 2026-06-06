@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+const API_URL = import.meta.env.VITE_API_URL
 
 const initialState = {
   posts: [],
@@ -12,7 +13,7 @@ const initialState = {
 // Fetch posts feed
 export const fetchPosts = createAsyncThunk('posts/fetchAll', async ({ page = 1, limit = 10 } = {}, thunkAPI) => {
   try {
-    const response = await fetch(`/api/posts?page=${page}&limit=${limit}`)
+    const response = await fetch(`${API_URL}/api/posts?page=${page}&limit=${limit}`)
     const data = await response.json()
     if (!response.ok) throw new Error(data.message || 'Failed to fetch feed')
     return data
@@ -25,7 +26,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchAll', async ({ page = 1, 
 export const createPost = createAsyncThunk('posts/create', async (postData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch('/api/posts', {
+    const response = await fetch(`${API_URL}/api/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export const createPost = createAsyncThunk('posts/create', async (postData, thun
 export const likePost = createAsyncThunk('posts/like', async (postId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/posts/${postId}/like`, {
+    const response = await fetch(`${API_URL}/api/posts/${postId}/like`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -61,7 +62,7 @@ export const likePost = createAsyncThunk('posts/like', async (postId, thunkAPI) 
 export const repostPost = createAsyncThunk('posts/repost', async (postId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/posts/${postId}/repost`, {
+    const response = await fetch(`${API_URL}/api/posts/${postId}/repost`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -77,7 +78,7 @@ export const repostPost = createAsyncThunk('posts/repost', async (postId, thunkA
 export const commentPost = createAsyncThunk('posts/comment', async ({ postId, text }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/posts/${postId}/comments`, {
+    const response = await fetch(`${API_URL}/api/posts/${postId}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +98,7 @@ export const commentPost = createAsyncThunk('posts/comment', async ({ postId, te
 export const deletePost = createAsyncThunk('posts/delete', async (postId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/posts/${postId}`, {
+    const response = await fetch(`${API_URL}/api/posts/${postId}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     })

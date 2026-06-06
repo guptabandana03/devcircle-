@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+const API_URL = import.meta.env.VITE_API_URL
 
 const initialState = {
   questions: [],
@@ -12,7 +13,7 @@ const initialState = {
 // Fetch all questions
 export const fetchQuestions = createAsyncThunk('qa/fetchAll', async ({ tag = '', sort = '' } = {}, thunkAPI) => {
   try {
-    const url = `/api/questions?tag=${tag}&sort=${sort}`
+    const url = `${API_URL}/api/questions?tag=${tag}&sort=${sort}`
     const response = await fetch(url)
     const data = await response.json()
     if (!response.ok) throw new Error(data.message || 'Failed to fetch questions')
@@ -25,7 +26,7 @@ export const fetchQuestions = createAsyncThunk('qa/fetchAll', async ({ tag = '',
 // Fetch single question by ID
 export const fetchQuestionById = createAsyncThunk('qa/fetchById', async (questionId, thunkAPI) => {
   try {
-    const response = await fetch(`/api/questions/${questionId}`)
+    const response = await fetch(`${API_URL}/api/questions/${questionId}`)
     const data = await response.json()
     if (!response.ok) throw new Error(data.message || 'Failed to fetch question details')
     return data
@@ -38,7 +39,7 @@ export const fetchQuestionById = createAsyncThunk('qa/fetchById', async (questio
 export const createQuestion = createAsyncThunk('qa/create', async (questionData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch('/api/questions', {
+    const response = await fetch(`${API_URL}/api/questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ export const createQuestion = createAsyncThunk('qa/create', async (questionData,
 export const voteQuestion = createAsyncThunk('qa/voteQuestion', async ({ questionId, direction }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/questions/${questionId}/vote`, {
+    const response = await fetch(`${API_URL}/api/questions/${questionId}/vote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ export const voteQuestion = createAsyncThunk('qa/voteQuestion', async ({ questio
 // Fetch answers for a question
 export const fetchAnswers = createAsyncThunk('qa/fetchAnswers', async (questionId, thunkAPI) => {
   try {
-    const response = await fetch(`/api/questions/${questionId}/answers`)
+    const response = await fetch(`${API_URL}/api/questions/${questionId}/answers`)
     const data = await response.json()
     if (!response.ok) throw new Error(data.message || 'Failed to fetch answers')
     return data
@@ -90,7 +91,7 @@ export const fetchAnswers = createAsyncThunk('qa/fetchAnswers', async (questionI
 export const createAnswer = createAsyncThunk('qa/createAnswer', async ({ questionId, content }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/questions/${questionId}/answers`, {
+    const response = await fetch(`${API_URL}/api/questions/${questionId}/answers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ export const createAnswer = createAsyncThunk('qa/createAnswer', async ({ questio
 export const voteAnswer = createAsyncThunk('qa/voteAnswer', async ({ answerId, direction }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/questions/answers/${answerId}/vote`, {
+    const response = await fetch(`${API_URL}/api/questions/answers/${answerId}/vote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +131,7 @@ export const voteAnswer = createAsyncThunk('qa/voteAnswer', async ({ answerId, d
 export const acceptAnswer = createAsyncThunk('qa/acceptAnswer', async (answerId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/questions/answers/${answerId}/accept`, {
+    const response = await fetch(`${API_URL}/api/questions/answers/${answerId}/accept`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
     })

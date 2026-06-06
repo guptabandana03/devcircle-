@@ -4,6 +4,7 @@ import { io } from 'socket.io-client'
 import { fetchConversations, fetchMessages, selectActivePartner, addIncomingMessage, updateOnlineUsersList } from '../store/chatSlice'
 import { Send, User, Circle, ArrowLeft, Loader } from 'lucide-react'
 import { Link } from 'react-router-dom'
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL
 
 function ChatPage() {
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ function ChatPage() {
     if (!user) return
 
     // Connect to server (proxy will point to http://localhost:5000)
-    const socket = io('/', { transports: ['websocket'] })
+    const socket = io(SOCKET_URL, { transports: ['websocket'] })
     socketRef.current = socket
 
     // Register active user

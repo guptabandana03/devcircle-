@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+const API_URL = import.meta.env.VITE_API_URL
 
 const initialState = {
   conversations: [],
@@ -14,7 +15,7 @@ const initialState = {
 export const fetchConversations = createAsyncThunk('chat/fetchConversations', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch('/api/chat/conversations', {
+    const response = await fetch(`${API_URL}/api/chat/conversations`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     const data = await response.json()
@@ -29,7 +30,7 @@ export const fetchConversations = createAsyncThunk('chat/fetchConversations', as
 export const fetchMessages = createAsyncThunk('chat/fetchMessages', async (partnerId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-    const response = await fetch(`/api/chat/messages/${partnerId}`, {
+    const response = await fetch(`${API_URL}/api/chat/messages/${partnerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     const data = await response.json()
