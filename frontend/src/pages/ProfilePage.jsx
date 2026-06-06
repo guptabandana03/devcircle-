@@ -5,6 +5,7 @@ import { updateProfile } from '../store/authSlice'
 import { selectActivePartner } from '../store/chatSlice'
 import PostCard from '../components/PostCard'
 import { User, Github, Award, Info, Edit, Sparkles, MessageSquare, Plus, Check } from 'lucide-react'
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ProfilePage() {
   const { username } = useParams()
@@ -31,8 +32,14 @@ function ProfilePage() {
   const loadProfile = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`/api/users/profile/${username}`)
+      console.log('API_URL:', API_URL)
+      console.log('PROFILE REQUEST:', `${API_URL}/api/users/profile/${username}`)
+
+      const response = await fetch(`${API_URL}/api/users/profile/${username}`)
       const data = await response.json()
+
+      console.log('PROFILE RESPONSE:', response.status, data)
+
       if (response.ok) {
         setProfile(data)
         setBio(data.bio || '')
@@ -54,7 +61,7 @@ function ProfilePage() {
 
   const loadUserPosts = async () => {
     try {
-      const response = await fetch('/api/posts')
+      const response = await fetch(`${API_URL}/api/posts`)
       const data = await response.json()
       if (response.ok && data.posts) {
         // Filter posts created by this user
@@ -81,7 +88,7 @@ function ProfilePage() {
   const handleFollowToggle = async () => {
     if (!currentUser || !profile) return
     try {
-      const response = await fetch(`/api/users/${profile._id}/follow`, {
+      const response = await fetch(`${API_URL}/api/users/${profile._id}/follow`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       })
