@@ -5,6 +5,7 @@ import { logout } from '../store/authSlice'
 import { fetchNotifications, markNotificationsAsRead, selectUnreadCount } from '../store/notificationSlice'
 import { fetchConversations } from '../store/chatSlice'
 import { Bell, MessageSquare, LogOut, User, Terminal, Search  } from 'lucide-react'
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Navbar() {
   const navigate = useNavigate()
@@ -87,7 +88,7 @@ function Navbar() {
   }
 
   try {
-    const response = await fetch(`/api/search?query=${value}`)
+    const response = await fetch(`${API_URL}/api/search?query=${value}`)
     const data = await response.json()
 
     if (response.ok) {

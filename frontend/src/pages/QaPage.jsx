@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { fetchQuestions, createQuestion } from '../store/qaSlice'
 import AiAssistant from '../components/AiAssistant'
 import { HelpCircle, Sparkles, PlusCircle, ArrowUp, ArrowDown, Check, Search, Tag, MessageSquare, Terminal } from 'lucide-react'
+const API_URL = import.meta.env.VITE_API_URL;
 
 function QaPage() {
   const dispatch = useDispatch()
@@ -74,7 +75,7 @@ function QaPage() {
   }
 
   try {
-    const response = await fetch('/api/ai/suggest-questions', {
+    const response = await fetch(`${API_URL}/api/ai/suggest-questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

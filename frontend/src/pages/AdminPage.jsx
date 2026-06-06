@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ShieldAlert, Trash2, CheckCircle2, AlertTriangle, User } from 'lucide-react'
+const API_URL = import.meta.env.VITE_API_URL;
 
 function AdminPage() {
   const { token } = useSelector((state) => state.auth)
@@ -12,7 +13,7 @@ function AdminPage() {
   const loadReports = async () => {
     setLoading(true)
     try {
-      const response = await fetch('/api/admin/reports', {
+      const response = await fetch(`${API_URL}/api/admin/reports`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       const data = await response.json()
@@ -35,7 +36,7 @@ function AdminPage() {
   const handleResolve = async (reportId, action) => {
     if (!window.confirm(`Are you sure you want to resolve this report via ${action.toUpperCase()}?`)) return
     try {
-      const response = await fetch(`/api/admin/reports/${reportId}/resolve`, {
+      const response = await fetch(`${API_URL}/api/admin/reports/${reportId}/resolve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

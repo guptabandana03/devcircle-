@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Sparkles, Tag, CheckSquare, AlertTriangle, CheckCircle, Loader } from 'lucide-react'
-
+const API_URL = import.meta.env.VITE_API_URL;
 function AiAssistant({
   text,
   setText,
@@ -22,7 +22,7 @@ function AiAssistant({
     setLoading(true)
     setFeedback('')
     try {
-      const response = await fetch('/api/ai/rephrase', {
+      const response = await fetch(`${API_URL}/api/ai/rephrase`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function AiAssistant({
     setLoading(true)
     setFeedback('')
     try {
-      const response = await fetch('/api/ai/tags', {
+      const response = await fetch(`${API_URL}/api/ai/tags`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ function AiAssistant({
     setWarnings([])
     setScore(null)
     try {
-      const response = await fetch('/api/ai/validate-question', {
+      const response = await fetch(`${API_URL}/api/ai/validate-question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

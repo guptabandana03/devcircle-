@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost, repostPost, commentPost, deletePost } from '../store/postSlice'
 import { Heart, Repeat2, MessageCircle, Trash2, Flag, AlertTriangle, Send } from 'lucide-react'
-
+const API_URL = import.meta.env.VITE_API_URL;
 function PostCard({ post }) {
   const dispatch = useDispatch()
   const { user, token } = useSelector((state) => state.auth)
@@ -47,7 +47,7 @@ function PostCard({ post }) {
 
   const loadComments = async () => {
     try {
-      const response = await fetch(`/api/posts/${post._id}/comments`)
+      const response = await fetch(`${API_URL}/api/posts/${post._id}/comments`)
       const data = await response.json()
       if (response.ok) {
         setComments(data)
@@ -81,7 +81,7 @@ function PostCard({ post }) {
     e.preventDefault()
     if (!reportReason.trim()) return
     try {
-      const response = await fetch('/api/admin/reports', {
+      const response = await fetch(`${API_URL}/api/admin/reports`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
