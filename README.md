@@ -1,6 +1,28 @@
 # DevCircle — Developer Community Platform
 
-DevCircle is a premier full-stack developer community platform combining micro-blogging timelines (Twitter-like feed) and technical query troubleshooting boards (Stack Overflow-like Q&A). The app is styled with a sleek glassmorphic dark UI, micro-animations, and integrated AI-assistance models.
+DevCircle is a modern developer community platform  inspired by LinkedIn, Twitter, and Stack Overflow.
+
+It allows developers to:
+
+- Create and share posts
+- Ask and answer technical questions
+- Follow other developers
+- Chat in real-time
+- Receive live notifications
+- Use AI-powered writing assistance
+
+The project was built as a full-stack MERN application with real-time communication using Socket.IO and AI integration through OpenRouter.
+
+## 🌐 Live Demo
+
+Frontend:
+https://devcircle-five.vercel.app
+
+Backend:
+https://devcircle-backend-szzi.onrender.com/api/health
+
+GitHub:
+https://github.com/guptabandana03/devcircle-
 
 ---
 
@@ -10,7 +32,7 @@ DevCircle is a premier full-stack developer community platform combining micro-b
 - **Styling**: Curated custom Vanilla CSS (HSL variables, glass blur filters, spring micro-hovers, scrollbars)
 - **Backend**: Node.js + Express (REST APIs) + Socket.io (1-on-1 chats and notifications timeline)
 - **Database**: MongoDB + Mongoose (structured document schemas)
-- **AI Integrations**: OpenAI API (proxy server middlewares: rephrase copilot, auto-taggers, vagueness validation)
+- **AI Integrations**: OpenRouter AI (proxy server    middlewares: rephrase copilot, auto-taggers, vagueness validation)
 
 ---
 
@@ -52,7 +74,7 @@ mahadev/
 
 Ensure you have Node.js (v18+) and MongoDB (running locally or a cloud URI) installed.
 
-### 1. Environment Configurations
+### Environment Configurations
 
 Create a `.env` file in the `backend/` directory (you can copy `backend/.env.example` as a template):
 
@@ -60,15 +82,59 @@ Create a `.env` file in the `backend/` directory (you can copy `backend/.env.exa
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/devcircle
 JWT_SECRET=devcircle_super_secret_key_1337
-OPENAI_API_KEY=your_openai_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 ```
 
 > [!NOTE]
-> If `OPENAI_API_KEY` is not provided, the server will automatically fall back to **realistic AI mock responders** so that you can verify and review all AI features (rephrasing, auto tag recommendations, quality validators) immediately without a paid API key!
+> If `OPENROUTER_API_KEY` is not provided, the server will automatically fall back to **realistic AI mock responders** so that you can verify and review all AI features (rephrasing, auto tag recommendations, quality validators) immediately without a paid API key!
 
 ---
 
-### 2. Manual Installation & Seeding
+## ✨ Features
+
+### Authentication & Profiles
+- JWT Authentication
+- User Registration & Login
+- Developer Profiles
+- Profile Editing
+- Follow / Unfollow Users
+
+### Social Feed
+- Create Posts
+- Like Posts
+- Comment on Posts
+- Repost Posts
+- Delete Own Posts
+
+### Q&A System
+- Ask Questions
+- Answer Questions
+- Upvote / Downvote Questions
+- Upvote / Downvote Answers
+- Accept Best Answer
+
+### AI Features
+- AI Post Improvement
+- AI Question Improvement
+- AI Tag Suggestions
+- AI Quality Validation
+
+### Real-Time Features
+- Live Developer Chat
+- Online Status Indicators
+- Typing Indicators
+- Instant Notifications
+
+### Search
+- Search Developers
+- Search Questions
+- Search Posts
+
+### Admin Panel
+- Admin-only dashboard access
+- Content moderation tools
+
+### Manual Installation & Seeding
 
 Open a terminal in the project root folder:
 
@@ -99,7 +165,7 @@ Visit **`http://localhost:5173`** in your browser to explore the platform!
 
 ---
 
-### 3. Docker Compose Orchestration
+### Docker Compose Orchestration
 
 To boot the entire cluster (MongoDB + backend REST/Socket servers + frontend client) inside Docker containers:
 

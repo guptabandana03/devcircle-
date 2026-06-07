@@ -20,7 +20,8 @@ services:
       - PORT=5000
       - MONGO_URI=mongodb://mongodb:27017/devcircle
       - JWT_SECRET=devcircle_super_secret_key_1337
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - NODE_ENV=development
     depends_on:
       - mongodb
     networks:
@@ -31,6 +32,9 @@ services:
     container_name: devcircle_frontend
     ports:
       - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+      - VITE_SOCKET_URL=http://localhost:5000    
     stdin_open: true
     tty: true
     depends_on:
